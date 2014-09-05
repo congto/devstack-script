@@ -33,6 +33,9 @@ netmask 255.255.255.0
 EOF
 ```
 - Khởi động lại máy sau khi thiết lập IP tĩnh
+```sh
+init 6
+```
 ### Thực hiện các bước trước khi cài devstack
 ```sh 
 adduser stack
