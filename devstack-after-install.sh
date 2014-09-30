@@ -8,6 +8,8 @@ NETMASK_IP=`sudo /sbin/ifconfig eth0 | awk '/inet addr/ {print $4}' | cut -f2 -d
 GATEWAY_IP=`sudo ip route list | awk '/^default/ {print $3}'`
 
 echo "##### Thiet lap IP #####"
+sleep 3
+
 ifaces=/etc/network/interfaces
 test -f $ifaces.orig || cp $ifaces $ifaces.orig
 rm $ifaces
@@ -44,7 +46,10 @@ down ifconfig \$IFACE down
 EOF
 
 ##
+echo "##### Thuc hien add port cho OVS #####"
 sleep 3
 sudo ovs-vsctl add-port br-ex eth0
 
+echo "##### Khoi dong lai may chu #####"
+sleep 3
 init 6
