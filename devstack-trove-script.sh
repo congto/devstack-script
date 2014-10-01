@@ -63,5 +63,5 @@ LOGFILE=/opt/stack/logs/stack.sh.log
 VERBOSE=True
 LOG_COLOR=False
 SCREEN_LOGDIR=/opt/stack/logs
-
+EOF
 ./stack.sh
