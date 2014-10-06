@@ -46,6 +46,9 @@ enable_service q-agt
 enable_service q-dhcp
 enable_service q-l3
 enable_service q-meta
+# DISABLED_SERVICES=n-net
+# ENABLED_SERVICES+=,q-svc,q-agt,q-dhcp,q-l3,q-meta,q-metering,neutron
+
 # Prerequisite
 ENABLED_SERVICES=rabbit,mysql,key
  
@@ -71,7 +74,7 @@ CINDER_BAK_CEPH_USER=cind-backeups
 CINDER_ENABLED_BACKENDS=ceph,lvm
  
 # Nova - Compute Service
-ENABLED_SERVICES+=,n-api,n-crt,n-cpu,n-cond,n-sch,n-net
+# ENABLED_SERVICES+=,n-api,n-crt,n-cpu,n-cond,n-sch,n-net
 NOVA_CEPH_POOL=vmz
  
 #Log Output
