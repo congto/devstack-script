@@ -23,11 +23,11 @@ git clone -b stable/icehouse  https://github.com/openstack-dev/devstack.git  && 
 eth1_address=`/sbin/ifconfig eth1 | awk '/inet addr/ {print $2}' | cut -f2 -d ":" `
 PASSTEST=Welcome123
 
-echo "##### Khai bao file localrc #####"
+echo "##### Khai bao file local.conf #####"
 sleep 3
 cat <<EOF>> local.conf
 
-
+[[local|localrc]]
 ###IP Configuration
 HOST_IP=$eth1_address
 
