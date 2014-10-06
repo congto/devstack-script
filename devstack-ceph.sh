@@ -27,61 +27,59 @@ echo "##### Khai bao file localrc #####"
 sleep 3
 cat <<EOF>> local.conf
 
-[[local|localrc]]
-ADMIN_PASSWORD=luonggia
-DATABASE_PASSWORD=$ADMIN_PASSWORD
-RABBIT_PASSWORD=$ADMIN_PASSWORD
-SERVICE_PASSWORD=$ADMIN_PASSWORD
-SERVICE_TOKEN=a682f596-76f3-11e3-b3b2-e716f9080d50
-LOGFILE=$DEST/logs/stack.sh.log
-SCREEN_LOGDIR=$DEST/logs/screen
 
-# MULTI_HOST=True
+###IP Configuration
+HOST_IP=$eth1_address
 
-enable_service mysql
-#enable_service postgresql
-
+#Credentials
+ADMIN_PASSWORD=$PASSTEST
+MYSQL_PASSWORD=$PASSTEST
+RABBIT_PASSWORD=$PASSTEST
+SERVICE_PASSWORD=$PASSTEST
+SERVICE_TOKEN=$PASSTEST
+ 
+##Neutron
+enable_service neutron
 disable_service n-net
-enable_service q-svccd
+enable_service q-svc
 enable_service q-agt
 enable_service q-dhcp
 enable_service q-l3
 enable_service q-meta
-enable_service neutron
-
-enable_service s-proxy s-object s-container s-account
-SWIFT_HASH=$ADMIN_PASSWORD
-
-#enable_service c-bak
-
-enable_service n-novnc
-enable_service n-xvnc 
-
-# Ceph 
-
+# Prerequisite
+ENABLED_SERVICES=rabbit,mysql,key
+ 
+# Ceph!
 ENABLED_SERVICES+=,ceph
 CEPH_LOOPBACK_DISK_SIZE=10G
 CEPH_CONF=/etc/ceph/ceph.conf
 CEPH_REPLICAS=1
-
-# Glance
+ 
+# Glance - Image Service
 ENABLED_SERVICES+=,g-api,g-reg
 GLANCE_CEPH_USER=glancy
-GLANCE_CEPH_POOL=image
-
-# Cinder
+GLANCE_CEPH_POOL=imajeez
+ 
+# Cinder - Block Device Service
 ENABLED_SERVICES+=,cinder,c-api,c-vol,c-sch,c-bak
 CINDER_DRIVER=ceph
 CINDER_CEPH_USER=cindy
-CINDER_CEPH_POOL=volume
+CINDER_CEPH_POOL=volumeuh
 CINDER_CEPH_UUID=6d52eb95-12f3-47e3-9eb9-0c1fe4142426
-CINDER_BAK_CEPH_USER=backy
-CINDER_BAK_CEPH_POOL=backup
-CINDER_ENABLED_BACKENDS=ceph,1vm
-
-# Nova
+CINDER_BAK_CEPH_POOL=backeups
+CINDER_BAK_CEPH_USER=cind-backeups
+CINDER_ENABLED_BACKENDS=ceph,lvm
+ 
+# Nova - Compute Service
 ENABLED_SERVICES+=,n-api,n-crt,n-cpu,n-cond,n-sch,n-net
 NOVA_CEPH_POOL=vmz
+ 
+#Log Output
+# LOGFILE=/opt/stack/logs/stack.sh.log
+# VERBOSE=True
+# LOG_COLOR=False
+# SCREEN_LOGDIR=/opt/stack/logs
+
 EOF
 
 ./stack.sh
